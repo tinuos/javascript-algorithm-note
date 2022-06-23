@@ -1,0 +1,41 @@
+# 백준 온라인 저지
+
+---
+
+## 입력 처리 방법
+
+```js
+var fs = require('fs');
+var input = fs.readFileSync('/dev/stdin').toString().split(' ');
+var a = parseInt(input[0]);
+var b = parseInt(input[1]);
+console.log(a+b);
+```
+
+- BOJ node.js 관련 컴파일 예제코드
+- `fs` 모듈을 이용하여 입출력 처리
+- BOJ 서버 내에 `/dev/stdin` 표준 입력을 관련 메서드로 이용하여 처리
+  - [fs.readFileSync()](https://nodejs.org/dist/latest-v16.x/docs/api/fs.html#fsreadfilesyncpath-options)
+    - 해당 경로에 있는 내용을 문자열이나 버퍼(?)로 반환
+  - toString()
+    - 문자열 처리
+  - split()
+    - 구분자를 통해 나눠진 문자열을 배열(Array)로 반환
+- 코드 해석
+  - fs관련 메서드와 문자열 관련 메서드를 이용하여 입력되는 데이터를 최종적으로 배열 데이터로 처리 - `input`
+  - 배열 데이터 내에서 인덱스를 이용하여 처리하고자 하는 데이터로 변수에 담아 코드 작성 - `a, b`
+- 실제 연습 시
+  - readFileSync 는 경로 내에 있는 파일에 대한 내용을 해석하는 메서드
+  - 편집기에서 주로 작업하는 경우라면 경로 내에 입력용 파일을 따로 만들어서 사용하거나 스크립트 내부에 처음부터 입력 데이터를 붙여넣어 사용 (어떠한 방법이든 표준 입력에 대한 코드가 있어야 한다 - fs 모듈)
+  - 파일을 연결하여 사용한 경우 BOJ 제출 시 `/dev/stdin` 경로로 다시 바꾸어 제출
+- 템플릿 리터럴로 입력 대체 관련 자료
+  - 입력 처리 관련 자료를 찾다가 알게 된 블로그 정보 - [참고 링크](https://degurii.tistory.com/108)
+  - 블로그 작성 자는 삼항 연산자를 이용하여 BOJ의 Linux 환경이 아니면 스크립트 내부에 템플릿 연산자를 이용하여 처리하도록 설정하였다.
+    - `const stdin = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin').toString() : `입력데이터`).split('\n');`
+  - 위와 같이 사용하면 로컬에서 작업할 때는 템플릿에 붙여 넣기한 입력데이터를 사용하고, 제출 시엔 따로 수정없이 제출이 가능하다고 한다.
+- 위 코드는 아주 기본적인 형태
+  - 단순히 하나의 문자열을 입력으로 처리하는 경우에는 split()등을 쓸 필요가 없다.
+    - 간혹 입력 처리에서 개행문자가 추가되는 경우가 있어 제출이 안되는 경우 문자열 변환 후 `trim()`으로 제거해주어야 한다.
+  - 관련 블로그 - [참고 링크](https://tesseractjh.tistory.com/39)
+
+> 일단, 텍스트 파일로 입력 처리를 로컬에서 진행하기로 결정. 너무 번거롭다고 여겨질 때 위 방법을 참고해봐야 겠다.
