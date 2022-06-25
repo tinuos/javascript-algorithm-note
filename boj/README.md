@@ -92,3 +92,27 @@ rl.on('line', function (line) {
 - 따로 입력 파일이나 임시 데이터를 만들어 입력을 처리하는 것이 아니라 터미널에서 직접 입력값을 넣어 출력 결과를 확인한다.
   
 >  관련 에러가 발생하는 [14681:사분면 고르기](https://www.acmicpc.net/problem/14681) 문제 같은 경우 입력이 2줄이라 그나마 괜찮지만, 입력 데이터가 많을 경우 터미널에 하나씩 쳐 보면서 출력 결과를 확인하는 것은 무리가 있다. 일단, fs모듈로 작성하고 처리 로직을 출력 인터페이스에 붙여 넣는 방식으로 해결하기로 결정.
+
+---
+
+## 출력 처리 방법
+
+### 반복문 사용 시 하나의 변수에 담아 출력하기
+
+```js
+const fs = require('fs');
+const inputDataPath = (process.platform === "linux" ? "/dev/stdin" : "input.txt");
+
+const input = fs.readFileSync(inputDataPath).toString().trim();
+const N = Number(input);
+
+let result = '';
+
+for (let i = 1; i <= N; i++) {
+  result += i + '\n';
+}
+
+console.log(result);
+```
+
+- 반복문 사용 시 위 코드처럼 변수 하나로 출력해야 시간초과 오류를 해결할 수 있다. (ex. [2741 : N찍기 문제](https://www.acmicpc.net/problem/2741))
